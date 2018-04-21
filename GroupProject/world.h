@@ -60,6 +60,10 @@ namespace csis3700 {
 
 	void player_killed();
 
+	void addSprite(sprite *s);
+
+	void removeSprite(sprite *s);
+
 
   private:
     void resolve_collisions();
@@ -73,6 +77,12 @@ namespace csis3700 {
 	void create_sprites();
 
 	void handle_collisions(std::vector<collision>&);
+
+	void updateSprites();
+
+	/*Keep track of sprites to add and to remove until after collisions are resolved or time is advanced*/
+	std::vector<sprite*> spritesToAdd;
+	std::vector<sprite*> spritesToRemove;
   };
 }
 

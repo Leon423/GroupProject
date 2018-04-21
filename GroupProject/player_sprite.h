@@ -2,10 +2,14 @@
 #define __CDS_PLAYER_SPRITE_H
 #include "phys_sprite.h"
 #include "world.h"
+#include "image_sequence.h"
+#include "player_missile.h"
 
 namespace csis3700 {
 
 	class world;
+	class image_sequence;
+	class player_missile;
 
   class player_sprite : public phys_sprite {
   public:
@@ -19,9 +23,51 @@ namespace csis3700 {
 
 	virtual void resolve(const collision& collision, sprite* other);
 
+	bool is_invincible()
+	{
+		return invincible;
+	}
+
+	void DoABarrelRoll(double dt);
+
+	bool canBarrelRoll();
+
+	bool canFire();
+
+	void Fire();
+
+	void RemoveMissile(player_missile *shot);
+
   private:
+	  // pointer to the world
 	  world *theWorld;
 	  void create_image_sequence();
+	  // the default animation that plays
+	  image_sequence *defaultSequence;
+	  // animation for the barrel roll
+	  image_sequence *barrelRollSequence;
+	  // barrel roll makes you invincible
+	  bool invincible;
+	  //Stores the time that the last barrel roll was activated
+	  double timeOfBarrelRoll;
+	  // The total time between starting a barrel roll and being able to do another one
+	  double barrelRollCooldown;
+	  // The length of time that you are invincible from a barrel roll.
+	  double barrelRollLength;
+	  // max number of missiles allowed on screen at once
+	  int maxMissiles;
+	  int currentMissileCount;
+	  // time between missile fires
+	  double shotCooldown;
+	  // time of last shot
+	  double lastShotTime;
+	  // Score
+	  double score;
+
+	  double speedX;
+	  double speedY;
+
+	  player_missile* myShot;
   };
 }
 

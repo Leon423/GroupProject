@@ -10,6 +10,7 @@
 #include "obstruction_sprite.h"
 #include "collision.h"
 #include "image_library.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -33,6 +34,57 @@ namespace csis3700 {
   {
 	  player = new player_sprite(this, 0, 0);
 	  sprites.push_back(player);
+  }
+
+  void world::addSprite(sprite *s)
+  {
+	  spritesToAdd.push_back(s);
+  }
+
+  void world::removeSprite(sprite *s)
+  {
+
+	  spritesToRemove.push_back(s);
+  }
+
+  void world::updateSprites()
+  {
+	  if (spritesToAdd.size() != 0)
+	  {
+		  for (vector<sprite*>::iterator it = spritesToAdd.begin(); it != spritesToAdd.end(); ++it)
+		  {
+			  sprites.push_back(*it);
+		  }
+
+		  spritesToAdd.clear();
+	  }
+
+	  vector<sprite*> temp;
+
+	  if (spritesToRemove.size() != 0)
+	  {
+		  for (vector<sprite*>::iterator it = spritesToRemove.begin(); it != spritesToRemove.end(); ++it)
+		  {
+
+			  for (vector<sprite*>::iterator it2 = sprites.begin(); it2 != sprites.end(); ++it2)
+			  {
+				  if (*it == *it2)
+				  {
+					  // do nothing
+				  }
+				  else
+				  {
+					  temp.push_back(*it2);
+				  }
+			  }
+		  }
+		  sprites = temp;
+		  for (vector<sprite*>::iterator it = spritesToRemove.begin(); it != spritesToRemove.end(); ++it)
+		  {
+			  delete *it;
+		  }
+		  spritesToRemove.clear();
+	  }
   }
 
   world::world(const world& other) {
@@ -84,15 +136,30 @@ namespace csis3700 {
     for(vector<sprite*>::iterator it = sprites.begin(); it != sprites.end(); ++it)
       (*it)->advance_by_time(dt);
     resolve_collisions();
+	updateSprites();
   }
 
-  void world::draw() {
-    al_clear_to_color(al_map_rgb(255,255,255));
+  void world::draw() 
+  {
+	  ALLEGRO_TRANSFORM t;
+	  al_identity_transform(&t);
+	  if (player != nullptr)
+	  {
+		  al_translate_transform(&t, -player->get_x() + 50, 0);
+	  }
 
-	al_draw_bitmap(background, 0, 0, 0);
+	  al_use_transform(&t);
+	  al_clear_to_color(al_map_rgb(255,255,255));
 
-    for(vector<sprite*>::iterator it = sprites.begin(); it != sprites.end(); ++it)
-      (*it)->draw();
+	  int bgWidth = al_get_bitmap_width(background);
+
+	  al_draw_bitmap(background, 0, 0, 0);
+	  al_draw_bitmap(background, bgWidth, 0, 0);
+	  al_draw_bitmap(background, bgWidth*2, 0, 0);
+
+	  for(vector<sprite*>::iterator it = sprites.begin(); it != sprites.end(); ++it)
+		  (*it)->draw();
+
   }
 
   bool world::should_exit() {

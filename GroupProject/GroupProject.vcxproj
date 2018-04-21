@@ -164,6 +164,7 @@
     <ClInclude Include="keyboard_manager.h" />
     <ClInclude Include="obstruction_sprite.h" />
     <ClInclude Include="phys_sprite.h" />
+    <ClInclude Include="player_missile.h" />
     <ClInclude Include="player_sprite.h" />
     <ClInclude Include="rectangle.h" />
     <ClInclude Include="sprite.h" />
@@ -181,6 +182,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="obstruction_sprite.cpp" />
     <ClCompile Include="phys_sprite.cpp" />
+    <ClCompile Include="player_missile.cpp" />
     <ClCompile Include="player_sprite.cpp" />
     <ClCompile Include="rectangle.cpp" />
     <ClCompile Include="sprite.cpp" />
