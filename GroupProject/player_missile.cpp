@@ -19,12 +19,14 @@ namespace csis3700
 		set_velocity(vec2d(speed, 0));
 		creationTime = time;
 		pointsScored = 0;
+		collisionChan = PlayerMissile;
+		explodeNextFrame = false;
 		create_image_sequence();
 	}
 
 	void csis3700::player_missile::advance_by_time(double dt)
 	{
-		if ((time - creationTime) >= lifeSpan)
+		if ((time - creationTime) >= lifeSpan || explodeNextFrame)
 		{
 			Explode();
 		}
@@ -34,6 +36,31 @@ namespace csis3700
 	void csis3700::player_missile::resolve(const collision & collision, sprite * other)
 	{
 		/*TODO: Update collision responses to handle missiles so we can blow them up!*/
+		if (other->GetCollisionChannel() == Enemy)
+		{
+			// we destroy the baddie!
+			Enemy_Sprite *s = dynamic_cast<Enemy_Sprite*>(other);
+			if (s != NULL)
+			{
+				pointsScored += s->GetPoints();
+				s->die();
+				// should probably set explosion image sequence at this point?
+				explodeNextFrame = true;
+			}
+
+			
+		}
+
+		if (other->GetCollisionChannel() == Collectible)
+		{
+			// do we need to do anything?
+		}
+
+		if (other->GetCollisionChannel() == Player)
+		{
+			printf("WOOOOOOOO");
+		}
+
 
 	}
 

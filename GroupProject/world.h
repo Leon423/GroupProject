@@ -5,10 +5,12 @@
 #include "sprite.h"
 #include "player_sprite.h"
 #include <vector>
+#include "Enemy_Spawner.h"
 
 namespace csis3700 {
 
 	class player_sprite;
+	class Enemy_Spawner;
 
   class world {
   public:
@@ -64,6 +66,10 @@ namespace csis3700 {
 
 	void removeSprite(sprite *s);
 
+	const player_sprite * get_player()
+	{
+		return player;
+	}
 
   private:
     void resolve_collisions();
@@ -79,6 +85,12 @@ namespace csis3700 {
 	void handle_collisions(std::vector<collision>&);
 
 	void updateSprites();
+
+	void SpawnEnemies();
+
+	double lastSpawnTime;
+	/*Time since creation*/
+	double time;
 
 	/*Keep track of sprites to add and to remove until after collisions are resolved or time is advanced*/
 	std::vector<sprite*> spritesToAdd;

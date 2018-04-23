@@ -18,7 +18,7 @@ namespace csis3700 {
 
 	  theWorld = w;
 	  speedX = 200;
-	  speedY = 100;
+	  speedY = 200;
 	  invincible = false;
 	  timeOfBarrelRoll = 0;
 	  barrelRollCooldown = 4.0;
@@ -29,6 +29,7 @@ namespace csis3700 {
 	  score = 0;
 	  shotCooldown = 3.0;
 	  lastShotTime = 0;
+	  collisionChan = Player;
 	  create_image_sequence();
 
   }
@@ -85,8 +86,20 @@ namespace csis3700 {
 
   void player_sprite::resolve(const collision& collision, sprite* other)
   {
-	  // for now we just tell the world we died
-	  theWorld->player_killed();
+	  if (other->GetCollisionChannel() == PlayerMissile)
+		  return;
+
+	  if (other->GetCollisionChannel() == Enemy)
+	  {
+		  // we hit an enemy or a missile, so we died!
+		  theWorld->player_killed();
+		  return;
+	  }
+
+	  if (other->GetCollisionChannel() == Collectible)
+	  {
+		  // do powerup, coins, whatever thing
+	  }
   }
 
   void player_sprite::DoABarrelRoll(double dt)
@@ -119,7 +132,7 @@ namespace csis3700 {
 
   void player_sprite::Fire()
   {
-	  myShot = new player_missile(this, get_x() + 20, get_y());
+	  player_missile *myShot = new player_missile(this, get_x() + 20, get_y());
 	  currentMissileCount++;
 
 	  theWorld->addSprite(myShot);
@@ -132,4 +145,8 @@ namespace csis3700 {
 	  theWorld->removeSprite(shot);
   }
 
+  double player_sprite::getScore()
+  {
+	  return score;
+  }
 }

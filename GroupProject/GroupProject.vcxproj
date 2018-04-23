@@ -159,6 +159,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="collision.h" />
+    <ClInclude Include="Enemy_Flyer.h" />
+    <ClInclude Include="Enemy_Spawner.h" />
+    <ClInclude Include="Enemy_Sprite.h" />
+    <ClInclude Include="Enemy_Tracker.h" />
     <ClInclude Include="image_library.h" />
     <ClInclude Include="image_sequence.h" />
     <ClInclude Include="keyboard_manager.h" />
@@ -175,6 +179,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="collision.cpp" />
+    <ClCompile Include="Enemy_Flyer.cpp" />
+    <ClCompile Include="Enemy_Spawner.cpp" />
+    <ClCompile Include="Enemy_Sprite.cpp" />
+    <ClCompile Include="Enemy_Tracker.cpp" />
     <ClCompile Include="GroupProject.cpp" />
     <ClCompile Include="image_library.cpp" />
     <ClCompile Include="image_sequence.cpp" />
@@ -196,6 +204,9 @@
     <ClCompile Include="world.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

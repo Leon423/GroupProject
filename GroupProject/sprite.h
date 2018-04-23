@@ -72,12 +72,25 @@ namespace csis3700 {
      */
     virtual rectangle collision_rectangle(const sprite& other) const;
 
-	bool is_player()
+	virtual bool is_player()
 	{
 		return false;
 	}
 
 	virtual void resolve(const collision& collision, sprite* other) = 0;
+
+	/*Used for collisions*/
+	enum CollisionChannel
+	{
+		Player, PlayerMissile, Collectible, Enemy
+	};
+
+	CollisionChannel GetCollisionChannel()
+	{
+		return collisionChan;
+	}
+
+	//virtual void die() = 0;
 
   protected:
     
@@ -96,6 +109,7 @@ namespace csis3700 {
      */
     double time;
 
+	CollisionChannel collisionChan;
 	
   };
 }

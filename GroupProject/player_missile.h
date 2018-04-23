@@ -42,6 +42,7 @@ namespace csis3700 {
 		double speed;
 		double creationTime;
 		double pointsScored;
+		bool explodeNextFrame;
 	};
 }
 

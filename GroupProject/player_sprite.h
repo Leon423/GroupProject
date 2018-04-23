@@ -16,7 +16,7 @@ namespace csis3700 {
     player_sprite(world* w, float initial_x=0, float initial_y=0);
     virtual void advance_by_time(double dt);
 
-	bool is_player()
+	virtual bool is_player()
 	{
 		return true;
 	}
@@ -37,6 +37,8 @@ namespace csis3700 {
 	void Fire();
 
 	void RemoveMissile(player_missile *shot);
+
+	double getScore();
 
   private:
 	  // pointer to the world
@@ -66,8 +68,6 @@ namespace csis3700 {
 
 	  double speedX;
 	  double speedY;
-
-	  player_missile* myShot;
   };
 }
 

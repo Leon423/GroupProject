@@ -11,6 +11,7 @@
 #include "collision.h"
 #include "image_library.h"
 #include <algorithm>
+#include "allegro5/allegro_font.h"
 
 using namespace std;
 
@@ -26,7 +27,8 @@ namespace csis3700 {
 	  image_library *lib = image_library::get();
 
 	  background = lib->get("Background.jpg");
-
+	  lastSpawnTime = 0;
+	  time = 0;
 	  create_sprites();
   }
 
@@ -133,9 +135,12 @@ namespace csis3700 {
   }
 
   void world::advance_by_time(double dt) {
+	  time += dt;
+	  SpawnEnemies();
     for(vector<sprite*>::iterator it = sprites.begin(); it != sprites.end(); ++it)
       (*it)->advance_by_time(dt);
     resolve_collisions();
+	
 	updateSprites();
   }
 
@@ -160,6 +165,21 @@ namespace csis3700 {
 	  for(vector<sprite*>::iterator it = sprites.begin(); it != sprites.end(); ++it)
 		  (*it)->draw();
 
+
+  }
+
+  void world::SpawnEnemies()
+  {
+	  /*Spawn logic goes here, right now I just spawn a new enemy every 2 seconds*/
+	  if ((time - lastSpawnTime) >= 2)
+	  {
+		  float x = player->get_x() + al_get_bitmap_width(background) + 20;
+		  float y = player->get_y();
+		  Enemy_Spawner* eSpawner = Enemy_Spawner::get();
+		  sprite * s = eSpawner->SpawnEnemy(this, Enemy_Spawner::Tracker, x, y);
+		  addSprite(s);
+		  lastSpawnTime = time;
+	  }
   }
 
   bool world::should_exit() {
