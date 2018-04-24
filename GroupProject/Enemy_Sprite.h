@@ -17,6 +17,7 @@ namespace csis3700 {
 	{
 	public:
 		Enemy_Sprite();
+		~Enemy_Sprite();
 		double GetPoints();
 		Enemy_Sprite(world* w, float initX=0, float initialY=0);
 		virtual void advance_by_time(double dt) = 0;
@@ -28,6 +29,7 @@ namespace csis3700 {
 		double speedY;
 		double points;
 		image_sequence* defaultSequence;
+		void CheckBounds();
 	};
 }
 #endif

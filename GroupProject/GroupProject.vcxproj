@@ -160,9 +160,11 @@
   <ItemGroup>
     <ClInclude Include="collision.h" />
     <ClInclude Include="Enemy_Flyer.h" />
+    <ClInclude Include="enemy_missile.h" />
     <ClInclude Include="Enemy_Spawner.h" />
     <ClInclude Include="Enemy_Sprite.h" />
     <ClInclude Include="Enemy_Tracker.h" />
+    <ClInclude Include="Enemy_Tracker_Shoot.h" />
     <ClInclude Include="image_library.h" />
     <ClInclude Include="image_sequence.h" />
     <ClInclude Include="keyboard_manager.h" />
@@ -180,9 +182,11 @@
   <ItemGroup>
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="Enemy_Flyer.cpp" />
+    <ClCompile Include="enemy_missile.cpp" />
     <ClCompile Include="Enemy_Spawner.cpp" />
     <ClCompile Include="Enemy_Sprite.cpp" />
     <ClCompile Include="Enemy_Tracker.cpp" />
+    <ClCompile Include="Enemy_Tracker_Shoot.cpp" />
     <ClCompile Include="GroupProject.cpp" />
     <ClCompile Include="image_library.cpp" />
     <ClCompile Include="image_sequence.cpp" />

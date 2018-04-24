@@ -12,6 +12,8 @@
 #include "image_library.h"
 #include <algorithm>
 #include "allegro5/allegro_font.h"
+#include <vector>
+#include "enemy_missile.h"
 
 using namespace std;
 
@@ -29,6 +31,9 @@ namespace csis3700 {
 	  background = lib->get("Background.jpg");
 	  lastSpawnTime = 0;
 	  time = 0;
+	  currentEnemyCount = 0;
+	  maxEnemyCount = 5;
+	  playerKilled = false;
 	  create_sprites();
   }
 
@@ -51,6 +56,28 @@ namespace csis3700 {
 
   void world::updateSprites()
   {
+	  if (playerKilled)
+		  return;
+	  
+
+	  vector<int> indexRemoved;
+	  int currentIndex = 0;
+	  for (vector<sprite*>::iterator it2 = sprites.begin(); it2 != sprites.end(); it2++)
+	  {
+		  if ((*it2)->is_dead())
+		  {
+			  indexRemoved.push_back(currentIndex);
+		  }
+		  currentIndex++;
+	  }
+
+	  for (int i = 0; i < indexRemoved.size(); i++)
+	  {
+		  sprites.erase(sprites.begin() + indexRemoved.at(i));
+	  }
+
+	  //sprites.shrink_to_fit();
+
 	  if (spritesToAdd.size() != 0)
 	  {
 		  for (vector<sprite*>::iterator it = spritesToAdd.begin(); it != spritesToAdd.end(); ++it)
@@ -61,8 +88,72 @@ namespace csis3700 {
 		  spritesToAdd.clear();
 	  }
 
-	  vector<sprite*> temp;
+	  indexRemoved = vector<int>();
 
+	  currentIndex = 0;
+	  for (vector<enemy_missile*>::iterator it = missileSprites.begin(); it != missileSprites.end(); ++it)
+	  {
+		  if ((*it)->is_dead())
+		  {
+			  indexRemoved.push_back(currentIndex);
+		  }
+
+		  currentIndex++;
+	  }
+
+	  for (int i = 0; i < indexRemoved.size(); i++)
+	  {
+		  missileSprites.erase(missileSprites.begin() + indexRemoved.at(i));
+	  }
+
+	  if (missilesToAdd.size() != 0)
+	  {
+		  for (vector<enemy_missile*>::iterator it = missilesToAdd.begin(); it != missilesToAdd.end(); ++it)
+		  {
+			  missileSprites.push_back(*it);
+		  }
+
+		  missilesToAdd.clear();
+	  }
+
+
+	  
+
+	  /*
+	  vector<int> indexRemoved;
+	  
+	  if (spritesToRemove.size() != 0)
+	  {
+		  for (vector<sprite*>::iterator it = spritesToRemove.begin(); it != spritesToRemove.end(); ++it)
+		  {
+			  int currentindex = 0;
+			  for (vector<sprite*>::iterator it2 = sprites.begin(); it2 != sprites.end(); it2++)
+			  {
+				  if (*it == *it2)
+				  {
+					  // remove
+					  indexRemoved.push_back(currentindex);
+				  }
+
+				  currentindex++;
+			  }
+		  }
+
+		  for (int i = 0; i < indexRemoved.size(); i++)
+		  {
+			  sprites.erase(sprites.begin() + indexRemoved.at(i));
+		  }
+
+		  //spritesToRemove.clear();
+	  }
+	  */
+
+	  /*
+
+	  FIRST VERSION: CAUSES A MEMORY ACCESS VIOLATION
+
+	  vector<sprite*> temp;
+	  
 	  if (spritesToRemove.size() != 0)
 	  {
 		  for (vector<sprite*>::iterator it = spritesToRemove.begin(); it != spritesToRemove.end(); ++it)
@@ -72,7 +163,7 @@ namespace csis3700 {
 			  {
 				  if (*it == *it2)
 				  {
-					  // do nothing
+					  //printf("I'm happening\n");
 				  }
 				  else
 				  {
@@ -81,12 +172,19 @@ namespace csis3700 {
 			  }
 		  }
 		  sprites = temp;
+
 		  for (vector<sprite*>::iterator it = spritesToRemove.begin(); it != spritesToRemove.end(); ++it)
 		  {
 			  delete *it;
 		  }
+
 		  spritesToRemove.clear();
+
+		  
+	  
 	  }
+	  */
+	  
   }
 
   world::world(const world& other) {
@@ -139,6 +237,8 @@ namespace csis3700 {
 	  SpawnEnemies();
     for(vector<sprite*>::iterator it = sprites.begin(); it != sprites.end(); ++it)
       (*it)->advance_by_time(dt);
+	for (vector<enemy_missile*>::iterator it = missileSprites.begin(); it != missileSprites.end(); ++it)
+		(*it)->advance_by_time(dt);
     resolve_collisions();
 	
 	updateSprites();
@@ -157,29 +257,53 @@ namespace csis3700 {
 	  al_clear_to_color(al_map_rgb(255,255,255));
 
 	  int bgWidth = al_get_bitmap_width(background);
+	  float x = player->get_x();
+	  int backgroundPlayerIsIn = x / bgWidth;
 
-	  al_draw_bitmap(background, 0, 0, 0);
-	  al_draw_bitmap(background, bgWidth, 0, 0);
-	  al_draw_bitmap(background, bgWidth*2, 0, 0);
+	  al_draw_bitmap(background, -bgWidth + bgWidth*backgroundPlayerIsIn, 0, 0);
+	  al_draw_bitmap(background, 0 + bgWidth*backgroundPlayerIsIn, 0, 0);
+	  al_draw_bitmap(background, bgWidth + bgWidth*backgroundPlayerIsIn, 0, 0);
 
-	  for(vector<sprite*>::iterator it = sprites.begin(); it != sprites.end(); ++it)
-		  (*it)->draw();
+	  for (vector<sprite*>::iterator it = sprites.begin(); it != sprites.end(); ++it)
+	  {
+		 if(*it != NULL)
+			(*it)->draw();
+		  
+	  }
 
+	  for (vector<enemy_missile*>::iterator it = missileSprites.begin(); it != missileSprites.end(); ++it)
+	  {
+		  if (*it != NULL)
+			  (*it)->draw();
+
+	  }
 
   }
 
   void world::SpawnEnemies()
   {
 	  /*Spawn logic goes here, right now I just spawn a new enemy every 2 seconds*/
-	  if ((time - lastSpawnTime) >= 2)
+	  if ((time - lastSpawnTime) >= 1 && currentEnemyCount <= maxEnemyCount)
 	  {
 		  float x = player->get_x() + al_get_bitmap_width(background) + 20;
 		  float y = player->get_y();
 		  Enemy_Spawner* eSpawner = Enemy_Spawner::get();
-		  sprite * s = eSpawner->SpawnEnemy(this, Enemy_Spawner::Tracker, x, y);
+		  sprite * s = eSpawner->SpawnEnemy(this, Enemy_Spawner::TrackShoot, x, y);
 		  addSprite(s);
 		  lastSpawnTime = time;
+		  currentEnemyCount++;
 	  }
+  }
+
+  void world::removeEnemy(sprite * s)
+  {
+	  currentEnemyCount--;
+	  //removeSprite(s);
+  }
+
+  void world::addMissile(enemy_missile * missile)
+  {
+	  missilesToAdd.push_back(missile);
   }
 
   bool world::should_exit() {
@@ -190,6 +314,7 @@ namespace csis3700 {
   {
 	  if (sprites.front()->is_player())
 		  sprites.erase(sprites.begin());
+	  playerKilled = true;
   }
 
 }

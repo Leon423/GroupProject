@@ -69,6 +69,12 @@
     <ClInclude Include="Enemy_Tracker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy_Tracker_Shoot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_missile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -126,6 +132,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Enemy_Tracker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Tracker_Shoot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy_missile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

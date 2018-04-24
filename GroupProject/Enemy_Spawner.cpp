@@ -4,6 +4,7 @@
 #include "Enemy_Sprite.h"
 #include "Enemy_Flyer.h"
 #include "Enemy_Tracker.h"
+#include "Enemy_Tracker_Shoot.h"
 #include "world.h"
 namespace csis3700 {
 
@@ -36,7 +37,7 @@ namespace csis3700 {
 		}
 		else if (e == TrackShoot)
 		{
-
+			return new Enemy_Tracker_Shoot(w, X, Y);
 		}
 		else if (e == FlyShoot)
 		{

@@ -6,6 +6,7 @@
 #include "image_library.h"
 #include "image_sequence.h"
 #include "phys_sprite.h"
+#include <cassert>
 
 namespace csis3700 {
 
@@ -19,10 +20,13 @@ namespace csis3700 {
 		target = theWorld->get_player();
 		targetLocked = false;
 		set_velocity(vec2d(speedX, speedY));
+		isDead = false;
 		create_image_sequence();
 	}
 	Enemy_Tracker::~Enemy_Tracker()
 	{
+		target = nullptr;
+		Enemy_Sprite::~Enemy_Sprite();
 	}
 	void Enemy_Tracker::create_image_sequence()
 	{
@@ -53,5 +57,10 @@ namespace csis3700 {
 		set_velocity(vec2d(speedX, speedY));
 
 		phys_sprite::advance_by_time(dt);
+	}
+
+	Enemy_Tracker::Enemy_Tracker()
+	{
+		
 	}
 }

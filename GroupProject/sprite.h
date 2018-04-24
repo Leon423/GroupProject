@@ -92,6 +92,11 @@ namespace csis3700 {
 
 	//virtual void die() = 0;
 
+	bool is_dead()
+	{
+		return isDead;
+	}
+
   protected:
     
     /**
@@ -111,6 +116,8 @@ namespace csis3700 {
 
 	CollisionChannel collisionChan;
 	
+	bool isDead;
+
   };
 }
 #endif /* SPRITE_H */

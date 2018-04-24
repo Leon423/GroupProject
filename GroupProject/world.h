@@ -6,11 +6,13 @@
 #include "player_sprite.h"
 #include <vector>
 #include "Enemy_Spawner.h"
+#include "enemy_missile.h"
 
 namespace csis3700 {
 
 	class player_sprite;
 	class Enemy_Spawner;
+	class enemy_missile;
 
   class world {
   public:
@@ -71,6 +73,10 @@ namespace csis3700 {
 		return player;
 	}
 
+	void removeEnemy(sprite * s);
+
+	void addMissile(enemy_missile* missile);
+
   private:
     void resolve_collisions();
     player_sprite *player;
@@ -95,6 +101,14 @@ namespace csis3700 {
 	/*Keep track of sprites to add and to remove until after collisions are resolved or time is advanced*/
 	std::vector<sprite*> spritesToAdd;
 	std::vector<sprite*> spritesToRemove;
+	std::vector<enemy_missile*> missileSprites;
+	std::vector<enemy_missile*> missilesToAdd;
+	bool playerKilled;
+
+	int currentEnemyCount;
+	int maxEnemyCount;
+
+	
   };
 }
 

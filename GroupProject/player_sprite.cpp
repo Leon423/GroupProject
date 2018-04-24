@@ -9,6 +9,7 @@
 #include "world.h"
 #include "keyboard_manager.h"
 #include "obstruction_sprite.h"
+#include "enemy_missile.h"
 using namespace std;
 
 namespace csis3700 {
@@ -19,7 +20,7 @@ namespace csis3700 {
 	  theWorld = w;
 	  speedX = 200;
 	  speedY = 200;
-	  invincible = false;
+	  invincible = true;
 	  timeOfBarrelRoll = 0;
 	  barrelRollCooldown = 4.0;
 	  barrelRollLength = 2.0;
@@ -27,7 +28,7 @@ namespace csis3700 {
 	  maxMissiles = 3;
 	  currentMissileCount = 0;
 	  score = 0;
-	  shotCooldown = 3.0;
+	  shotCooldown = 1;
 	  lastShotTime = 0;
 	  collisionChan = Player;
 	  create_image_sequence();
@@ -76,7 +77,7 @@ namespace csis3700 {
 		  // currently barrel rolling, check the reset on it
 		  if ((time - timeOfBarrelRoll) >= barrelRollLength)
 		  {
-			  invincible = false;
+			  invincible = true;
 			  set_image_sequence(defaultSequence);
 		  }
 	  }
@@ -89,9 +90,17 @@ namespace csis3700 {
 	  if (other->GetCollisionChannel() == PlayerMissile)
 		  return;
 
-	  if (other->GetCollisionChannel() == Enemy)
+	  if (other->GetCollisionChannel() == Enemy && !invincible)
 	  {
 		  // we hit an enemy or a missile, so we died!
+
+		  enemy_missile *s = dynamic_cast<enemy_missile*>(other);
+
+		  if (s != NULL)
+		  {
+			  s->collidedWithPlayer();
+		  }
+
 		  theWorld->player_killed();
 		  return;
 	  }

@@ -8,11 +8,12 @@ namespace csis3700
 	player_missile::~player_missile()
 	{
 		//destructor
+		delete defaultSequence;
 	}
 
 	csis3700::player_missile::player_missile(player_sprite * p, float initial_x, float initial_y)
 	{
-		lifeSpan = 4.0;
+		lifeSpan = 7;
 		owner = p;
 		set_position(vec2d(initial_x, initial_y));
 		speed = 300;

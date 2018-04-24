@@ -17,15 +17,17 @@ namespace csis3700 {
 		Enemy_Tracker(world* w, float initialX = 0, float initialY = 0);
 		~Enemy_Tracker();
 
-		void create_image_sequence();
-
 		// Inherited via Enemy_Sprite
 		virtual void resolve(const collision & collision, sprite * other);
 		virtual void advance_by_time(double dt);
 
-	private:
+	protected:
 		const sprite * target;
 		bool targetLocked;
+		Enemy_Tracker();
+		void create_image_sequence();
+
+
 	};
 }
 
