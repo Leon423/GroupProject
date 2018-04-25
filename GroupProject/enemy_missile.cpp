@@ -6,17 +6,17 @@
 #include "world.h"
 
 namespace csis3700 {
-	enemy_missile::enemy_missile(world* w , float initial_x, float initial_y)
+	enemy_missile::enemy_missile(world* w , float initial_x, float initial_y) : phys_sprite(initial_x, initial_y)
 	{
 		lifeSpan = 2.0;
 		theWorld = w;
-		set_position(vec2d(initial_x, initial_y));
+		//set_position(vec2d(initial_x, initial_y));
 		creationTime = time;
 		speed = -100;
 		set_velocity(vec2d(speed, 0));
 		collisionChan = Enemy;
 		explodeNextFrame = false;
-		isDead = false;
+		//isDead = false;
 		create_image_sequence();
 	}
 

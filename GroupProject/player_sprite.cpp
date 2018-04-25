@@ -10,6 +10,8 @@
 #include "keyboard_manager.h"
 #include "obstruction_sprite.h"
 #include "enemy_missile.h"
+#include "pickup.h"
+
 using namespace std;
 
 namespace csis3700 {
@@ -28,7 +30,8 @@ namespace csis3700 {
 	  maxMissiles = 3;
 	  currentMissileCount = 0;
 	  score = 0;
-	  shotCooldown = 1;
+	  shotCooldown = 1.5;
+	  minimumFireRate = .5;
 	  lastShotTime = 0;
 	  collisionChan = Player;
 	  create_image_sequence();
@@ -77,7 +80,7 @@ namespace csis3700 {
 		  // currently barrel rolling, check the reset on it
 		  if ((time - timeOfBarrelRoll) >= barrelRollLength)
 		  {
-			  invincible = true;
+			  invincible = false;
 			  set_image_sequence(defaultSequence);
 		  }
 	  }
@@ -108,6 +111,12 @@ namespace csis3700 {
 	  if (other->GetCollisionChannel() == Collectible)
 	  {
 		  // do powerup, coins, whatever thing
+		  pickup* p = dynamic_cast<pickup*>(other);
+
+		  if (p != NULL)
+		  {
+			  p->OnPickup(this);
+		  }
 	  }
   }
 
@@ -157,5 +166,14 @@ namespace csis3700 {
   double player_sprite::getScore()
   {
 	  return score;
+  }
+  void player_sprite::IncreaseFireRate(double increase)
+  {
+	  shotCooldown -= increase;
+
+	  if (shotCooldown <= minimumFireRate)
+	  {
+		  shotCooldown = minimumFireRate;
+	  }
   }
 }

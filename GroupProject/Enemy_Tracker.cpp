@@ -10,17 +10,14 @@
 
 namespace csis3700 {
 
-	Enemy_Tracker::Enemy_Tracker(world * w, float initialX, float initialY)
+	Enemy_Tracker::Enemy_Tracker(world * w, float initialX, float initialY) : Enemy_Sprite(w, initialX, initialY)
 	{
-		theWorld = w;
-		set_position(vec2d(initialX, initialY));
+		
 		speedX = 100;
 		speedY = 0;
-		collisionChan = Enemy;
 		target = theWorld->get_player();
 		targetLocked = false;
 		set_velocity(vec2d(speedX, speedY));
-		isDead = false;
 		create_image_sequence();
 	}
 	Enemy_Tracker::~Enemy_Tracker()
@@ -59,8 +56,4 @@ namespace csis3700 {
 		phys_sprite::advance_by_time(dt);
 	}
 
-	Enemy_Tracker::Enemy_Tracker()
-	{
-		
-	}
 }

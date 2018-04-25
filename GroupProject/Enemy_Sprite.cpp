@@ -4,11 +4,6 @@
 #include "vec2d.h"
 
 namespace csis3700 {
-	Enemy_Sprite::Enemy_Sprite()
-	{
-		collisionChan = Enemy;
-		isDead = false;
-	}
 	Enemy_Sprite::~Enemy_Sprite()
 	{
 		theWorld = nullptr;
@@ -19,10 +14,10 @@ namespace csis3700 {
 	{
 		return points;
 	}
-	Enemy_Sprite::Enemy_Sprite(world * w, float initX, float initialY)
+	Enemy_Sprite::Enemy_Sprite(world * w, float initX, float initialY) : phys_sprite(initX, initialY)
 	{
 		theWorld = w;
-		set_position(vec2d(initX, initialY));
+		collisionChan = Enemy;
 	}
 	void Enemy_Sprite::die()
 	{

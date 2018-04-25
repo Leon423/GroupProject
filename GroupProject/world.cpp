@@ -95,6 +95,7 @@ namespace csis3700 {
 	  if (playerKilled)
 	  {
 		  spritesToAdd.erase(spritesToAdd.begin(), spritesToAdd.end());
+		  missilesToAdd.erase(missilesToAdd.begin(), missilesToAdd.end());
 		  return;
 	  }
 		  

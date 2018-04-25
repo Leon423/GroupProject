@@ -40,6 +40,8 @@ namespace csis3700 {
 
 	double getScore();
 
+	void IncreaseFireRate(double increase);
+
   private:
 	  // pointer to the world
 	  world *theWorld;
@@ -61,6 +63,8 @@ namespace csis3700 {
 	  int currentMissileCount;
 	  // time between missile fires
 	  double shotCooldown;
+	  //fastest firerate
+	  double minimumFireRate;
 	  // time of last shot
 	  double lastShotTime;
 	  // Score

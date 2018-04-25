@@ -8,7 +8,7 @@
 
 namespace csis3700 {
 	
-	Enemy_Flyer::Enemy_Flyer(world * w, float initialX, float initialY)
+	Enemy_Flyer::Enemy_Flyer(world * w, float initialX, float initialY) : Enemy_Sprite(w, initialX, initialY)
 	{
 		theWorld = w;
 		set_position(vec2d(initialX, initialY));

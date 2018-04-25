@@ -24,7 +24,6 @@ namespace csis3700 {
 	protected:
 		const sprite * target;
 		bool targetLocked;
-		Enemy_Tracker();
 		void create_image_sequence();
 
 

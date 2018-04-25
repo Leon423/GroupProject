@@ -171,6 +171,7 @@
     <ClInclude Include="obstruction_sprite.h" />
     <ClInclude Include="phys_sprite.h" />
     <ClInclude Include="pickup.h" />
+    <ClInclude Include="pickup_firerate.h" />
     <ClInclude Include="player_missile.h" />
     <ClInclude Include="player_sprite.h" />
     <ClInclude Include="rectangle.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="obstruction_sprite.cpp" />
     <ClCompile Include="phys_sprite.cpp" />
     <ClCompile Include="pickup.cpp" />
+    <ClCompile Include="pickup_firerate.cpp" />
     <ClCompile Include="player_missile.cpp" />
     <ClCompile Include="player_sprite.cpp" />
     <ClCompile Include="rectangle.cpp" />

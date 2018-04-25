@@ -6,18 +6,12 @@
 #include "image_library.h"
 
 namespace csis3700 {
-	Enemy_Tracker_Shoot::Enemy_Tracker_Shoot(world * w, float initialX, float initialY)
+	Enemy_Tracker_Shoot::Enemy_Tracker_Shoot(world * w, float initialX, float initialY) : Enemy_Tracker(w, initialX, initialY)
 	{
 		fireRate = 1;
 		lastFireTime = 0;
-		theWorld = w;
-		set_position(vec2d(initialX, initialY));
 		speedX = 100;
 		speedY = 0;
-		collisionChan = Enemy;
-		target = theWorld->get_player();
-		targetLocked = false;
-		isDead = false;
 		set_velocity(vec2d(speedX, speedY));
 		create_image_sequence();
 	}

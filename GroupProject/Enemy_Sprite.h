@@ -16,7 +16,7 @@ namespace csis3700 {
 	class Enemy_Sprite : public phys_sprite
 	{
 	public:
-		Enemy_Sprite();
+		
 		~Enemy_Sprite();
 		double GetPoints();
 		Enemy_Sprite(world* w, float initX=0, float initialY=0);

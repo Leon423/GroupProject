@@ -6,7 +6,7 @@ namespace csis3700 {
 
 	pickup::pickup(float initX, float initY) : sprite(initX, initX)
 	{
-		
+		collisionChan = Collectible;
 	}
 
 	pickup::~pickup()

@@ -11,11 +11,11 @@ namespace csis3700
 		delete defaultSequence;
 	}
 
-	csis3700::player_missile::player_missile(player_sprite * p, float initial_x, float initial_y)
+	csis3700::player_missile::player_missile(player_sprite * p, float initial_x, float initial_y) : phys_sprite(initial_x, initial_y)
 	{
 		lifeSpan = 7;
 		owner = p;
-		set_position(vec2d(initial_x, initial_y));
+		//set_position(vec2d(initial_x, initial_y));
 		speed = 300;
 		set_velocity(vec2d(speed, 0));
 		creationTime = time;
