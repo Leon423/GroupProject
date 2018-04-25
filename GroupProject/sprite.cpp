@@ -1,12 +1,14 @@
 #include "stdafx.h"
 
 #include "sprite.h"
+#include <cassert>
 
 namespace csis3700 {
 
   sprite::sprite(float initial_x, float initial_y) {
     position = vec2d(initial_x, initial_y);
     time = 0;
+	isDead = false;
   }
 
   void sprite::set_image_sequence(image_sequence *s) {
@@ -33,6 +35,10 @@ namespace csis3700 {
   }
 
   void sprite::draw() {
+	  if (sequence == nullptr)
+	  {
+		  assert(false);
+	  }
     sequence->draw(time, get_x(), get_y());
   }
 
