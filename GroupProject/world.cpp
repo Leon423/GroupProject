@@ -56,10 +56,6 @@ namespace csis3700 {
 
   void world::updateSprites()
   {
-	  if (playerKilled)
-		  return;
-	  
-
 	  vector<int> indexRemoved;
 	  int currentIndex = 0;
 	  for (vector<sprite*>::iterator it2 = sprites.begin(); it2 != sprites.end(); it2++)
@@ -71,22 +67,12 @@ namespace csis3700 {
 		  currentIndex++;
 	  }
 
-	  for (int i = 0; i < indexRemoved.size(); i++)
+	  for (int i = indexRemoved.size(); i > 0; i--)
 	  {
-		  sprites.erase(sprites.begin() + indexRemoved.at(i));
+		  sprites.erase(sprites.begin() + indexRemoved.at(i-1));
 	  }
 
 	  //sprites.shrink_to_fit();
-
-	  if (spritesToAdd.size() != 0)
-	  {
-		  for (vector<sprite*>::iterator it = spritesToAdd.begin(); it != spritesToAdd.end(); ++it)
-		  {
-			  sprites.push_back(*it);
-		  }
-
-		  spritesToAdd.clear();
-	  }
 
 	  indexRemoved = vector<int>();
 
@@ -101,9 +87,26 @@ namespace csis3700 {
 		  currentIndex++;
 	  }
 
-	  for (int i = 0; i < indexRemoved.size(); i++)
+	  for (int i = indexRemoved.size(); i > 0; i--)
 	  {
-		  missileSprites.erase(missileSprites.begin() + indexRemoved.at(i));
+		  missileSprites.erase(missileSprites.begin() + indexRemoved.at(i-1));
+	  }
+
+	  if (playerKilled)
+	  {
+		  spritesToAdd.erase(spritesToAdd.begin(), spritesToAdd.end());
+		  return;
+	  }
+		  
+
+	  if (spritesToAdd.size() != 0)
+	  {
+		  for (vector<sprite*>::iterator it = spritesToAdd.begin(); it != spritesToAdd.end(); ++it)
+		  {
+			  sprites.push_back(*it);
+		  }
+
+		  spritesToAdd.clear();
 	  }
 
 	  if (missilesToAdd.size() != 0)
@@ -217,6 +220,14 @@ namespace csis3700 {
 		  {
 			  if ((*i)->collides_with(**j))
 				  collisions.push_back(collision(*i, *j));
+		  }
+	  }
+
+	  for (auto i = missileSprites.begin(); i != missileSprites.end(); ++i)
+	  {
+		  if ((*i)->collides_with(*player))
+		  {
+			  collisions.push_back(collision(*i, player));
 		  }
 	  }
 

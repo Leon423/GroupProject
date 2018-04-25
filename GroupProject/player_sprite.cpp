@@ -20,7 +20,7 @@ namespace csis3700 {
 	  theWorld = w;
 	  speedX = 200;
 	  speedY = 200;
-	  invincible = true;
+	  invincible = false;
 	  timeOfBarrelRoll = 0;
 	  barrelRollCooldown = 4.0;
 	  barrelRollLength = 2.0;
@@ -151,7 +151,7 @@ namespace csis3700 {
   {
 	  score += shot->get_points();
 	  currentMissileCount--;
-	  theWorld->removeSprite(shot);
+	  //theWorld->removeSprite(shot);
   }
 
   double player_sprite::getScore()

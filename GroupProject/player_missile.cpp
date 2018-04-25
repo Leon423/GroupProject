@@ -78,7 +78,7 @@ namespace csis3700
 	void player_missile::Explode()
 	{
 		/*TODO: PLAY EXPLOSION*/
-
+		isDead = true;
 		owner->RemoveMissile(this);
 	}
 }
