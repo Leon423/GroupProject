@@ -29,7 +29,10 @@ namespace csis3700 {
 	{
 		defaultSequence = new image_sequence();
 		image_library *lib = image_library::get();
-		defaultSequence->add_image(lib->get("blah2.jpg"), 0);
+		defaultSequence->add_image(lib->get("enemy3.png"), 0.1);
+		defaultSequence->add_image(lib->get("enemy3_1.png"), 0.2);
+		defaultSequence->add_image(lib->get("enemy3_2.png"), 0.2);
+		defaultSequence->add_image(lib->get("enemy3_1.png"), 0.2);
 		set_image_sequence(defaultSequence);
 	}
 	void Enemy_Tracker::resolve(const collision & collision, sprite * other)

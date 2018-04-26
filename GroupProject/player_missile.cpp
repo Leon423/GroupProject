@@ -74,7 +74,8 @@ namespace csis3700
 		defaultSequence = new image_sequence();
 		
 		image_library *lib = image_library::get();
-		defaultSequence->add_image(lib->get("blah.jpg"), 0);
+		defaultSequence->add_image(lib->get("LB1.png"), 0.15);
+		defaultSequence->add_image(lib->get("LB2.png"), 0.05);
 		set_image_sequence(defaultSequence);
 	}
 

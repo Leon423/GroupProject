@@ -44,14 +44,21 @@ namespace csis3700 {
 	  /*TODO:	Add art to the Images folder and set this up for that artwork*/
 	  defaultSequence = new image_sequence();
 	  image_library *lib = image_library::get();
-	  defaultSequence->add_image(lib->get("Hero1.png"), 0);
-	  //defaultSequence->add_image(lib->get("blah2.jpg"), 0.2);
-	  //defaultSequence->add_image(lib->get("blah.jpg"), 0.2);
+	  defaultSequence->add_image(lib->get("hero2.png"), 0);
+	  defaultSequence->add_image(lib->get("hero3.png"), 0.2);
+	  defaultSequence->add_image(lib->get("hero4.png"), 0.2);
+	  //defaultSequence->add_image(lib->get("hero5.png"), 0.2);
+	  //defaultSequence->add_image(lib->get("hero4.png"), 0.2);
+	  defaultSequence->add_image(lib->get("hero3.png"), 0.2);
+	  defaultSequence->add_image(lib->get("hero2.png"), 0.2);
 	  set_image_sequence(defaultSequence);
 
 	  // Add creation of barrell roll sequence here as well, right now I'm just gonna set it to the diagonal X and not animate it
 	  barrelRollSequence = new image_sequence();
-	  barrelRollSequence->add_image(lib->get("blah2.jpg"), 0);
+	  barrelRollSequence->add_image(lib->get("hero1.png"), 0);
+	  barrelRollSequence->add_image(lib->get("hero2.png"), 0.1);
+	  barrelRollSequence->add_image(lib->get("hero1.png"), 0.2);
+	  barrelRollSequence->add_image(lib->get("hero2.png"), 0.1);
   }
 
   void player_sprite::advance_by_time(double dt) {
