@@ -44,9 +44,9 @@ namespace csis3700 {
 	  /*TODO:	Add art to the Images folder and set this up for that artwork*/
 	  defaultSequence = new image_sequence();
 	  image_library *lib = image_library::get();
-	  defaultSequence->add_image(lib->get("blah.jpg"), 0);
-	  defaultSequence->add_image(lib->get("blah2.jpg"), 0.2);
-	  defaultSequence->add_image(lib->get("blah.jpg"), 0.2);
+	  defaultSequence->add_image(lib->get("Hero1.png"), 0);
+	  //defaultSequence->add_image(lib->get("blah2.jpg"), 0.2);
+	  //defaultSequence->add_image(lib->get("blah.jpg"), 0.2);
 	  set_image_sequence(defaultSequence);
 
 	  // Add creation of barrell roll sequence here as well, right now I'm just gonna set it to the diagonal X and not animate it
@@ -150,7 +150,9 @@ namespace csis3700 {
 
   void player_sprite::Fire()
   {
-	  player_missile *myShot = new player_missile(this, get_x() + 20, get_y());
+	  float spawnX = get_x() + get_width();
+	  float spawnY = get_y() + get_height() / 4;
+	  player_missile *myShot = new player_missile(this, spawnX, spawnY);
 	  currentMissileCount++;
 
 	  theWorld->addSprite(myShot);

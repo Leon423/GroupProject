@@ -3,6 +3,9 @@
 #include "phys_sprite.h"
 #include "player_sprite.h"
 #include "image_library.h"
+#include "enemy_missile.h"
+#include "Enemy_Sprite.h"
+
 namespace csis3700
 {
 	player_missile::~player_missile()
@@ -47,9 +50,9 @@ namespace csis3700
 				s->die();
 				// should probably set explosion image sequence at this point?
 				explodeNextFrame = true;
-			}
 
-			
+				return;
+			}
 		}
 
 		if (other->GetCollisionChannel() == Collectible)

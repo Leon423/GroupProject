@@ -271,7 +271,7 @@ namespace csis3700 {
 	  int bgWidth = al_get_bitmap_width(background);
 	  float x = player->get_x();
 	  int backgroundPlayerIsIn = x / bgWidth;
-
+	  // TODO: Update this to actually alternate the background. Probably gonna use sprites instead of just calling it here.
 	  al_draw_bitmap(background, -bgWidth + bgWidth*backgroundPlayerIsIn, 0, 0);
 	  al_draw_bitmap(background, 0 + bgWidth*backgroundPlayerIsIn, 0, 0);
 	  al_draw_bitmap(background, bgWidth + bgWidth*backgroundPlayerIsIn, 0, 0);
