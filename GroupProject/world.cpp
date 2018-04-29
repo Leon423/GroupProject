@@ -14,6 +14,11 @@
 #include "allegro5/allegro_font.h"
 #include <vector>
 #include "enemy_missile.h"
+#include "enemy_sprite.h"
+#include <ctime>
+#include <random>
+#include "allegro5\allegro_font.h"
+#include "allegro5\allegro_ttf.h"
 
 using namespace std;
 
@@ -34,6 +39,17 @@ namespace csis3700 {
 	  currentEnemyCount = 0;
 	  maxEnemyCount = 5;
 	  playerKilled = false;
+	  pickupSpawnAttempts = 0;
+	  pickupSpawnFrequency = 3;
+
+	  enemySpawnFrequency = 5;
+	  currentLevel = 1;
+	  LevelChangeScore = 1;
+
+	  generator = minstd_rand(std::time(0));
+
+	  font = al_load_font("Anonymous_Pro.ttf", 36, NULL);
+
 	  create_sprites();
   }
 
@@ -62,6 +78,13 @@ namespace csis3700 {
 	  {
 		  if ((*it2)->is_dead())
 		  {
+			  Enemy_Sprite* e = dynamic_cast<Enemy_Sprite*>(*it2);
+
+			  if (e != NULL)
+			  {
+				  currentEnemyCount--;
+			  }
+
 			  indexRemoved.push_back(currentIndex);
 		  }
 		  currentIndex++;
@@ -253,6 +276,11 @@ namespace csis3700 {
 		(*it)->advance_by_time(dt);
     resolve_collisions();
 	
+	if (player->getScore() >= (LevelChangeScore*currentLevel))
+	{
+		currentLevel++;
+	}
+
 	updateSprites();
   }
 
@@ -272,6 +300,7 @@ namespace csis3700 {
 	  float x = player->get_x();
 	  int backgroundPlayerIsIn = x / bgWidth;
 	  // TODO: Update this to actually alternate the background. Probably gonna use sprites instead of just calling it here.
+	  // ALSO NEED TO CHECK CURRENT LEVEL TO DRAW CORRECT BACKGROUND.
 	  al_draw_bitmap(background, -bgWidth + bgWidth*backgroundPlayerIsIn, 0, 0);
 	  al_draw_bitmap(background, 0 + bgWidth*backgroundPlayerIsIn, 0, 0);
 	  al_draw_bitmap(background, bgWidth + bgWidth*backgroundPlayerIsIn, 0, 0);
@@ -289,13 +318,73 @@ namespace csis3700 {
 			  (*it)->draw();
 
 	  }
+	  
+	  string str = std::to_string((int)player->getScore());
+
+	  char * p = new char[str.length() + 1];
+	  memcpy(p, str.c_str(), str.length() + 1);
+
+
+	  al_draw_text(font, al_map_rgb(255, 255, 255), player->get_x() - 40, 0, ALLEGRO_ALIGN_LEFT, "SCORE:");
+	  al_draw_textf(font, al_map_rgb(255, 255, 255), player->get_x() + 100, 0, ALLEGRO_ALIGN_LEFT, p);
 
   }
 
   void world::SpawnEnemies()
-  {
-	  /*Spawn logic goes here, right now I just spawn a new enemy every 2 seconds*/
-	  if ((time - lastSpawnTime) >= 1 && currentEnemyCount <= maxEnemyCount)
+  {  
+	  float spawnFreq = enemySpawnFrequency / currentLevel;
+	  if (spawnFreq < 1)
+		  spawnFreq = 1; // Dont want to spawn faster than 1 second.
+
+	  
+	  std::uniform_int_distribution<> dist(0, 3);
+	  int nextRandomInt = dist(generator);
+	  
+	  if ((time - lastSpawnTime) >= spawnFreq && currentEnemyCount <= maxEnemyCount * currentLevel)
+	  {
+		  float x = player->get_x() + al_get_bitmap_width(background) + 20;
+		  Enemy_Spawner* eSpawner = Enemy_Spawner::get();
+		  sprite* s = NULL;
+		  if (nextRandomInt == 0)
+		  {
+			  // spawn flyer
+			  
+			  float y = player->get_y();
+			  s = eSpawner->SpawnEnemy(this, Enemy_Spawner::Flyer, x, y);
+		  }
+		  else if (nextRandomInt == 1)
+		  {
+			  // spawn tracker
+			  // randomize the Y location
+			  std::uniform_int_distribution<> dist(50, al_get_display_height(al_get_current_display()) - 50);
+			  int randomY = dist(generator);
+			  float y = player->get_y();
+			  s = eSpawner->SpawnEnemy(this, Enemy_Spawner::Tracker, x, randomY);
+		  }
+		  else if (nextRandomInt == 2)
+		  {
+			  // spawn trackershoot
+			  std::uniform_int_distribution<> dist(50, al_get_display_height(al_get_current_display()) - 50);
+			  int randomY = dist(generator);
+			  float y = player->get_y();
+			  s = eSpawner->SpawnEnemy(this, Enemy_Spawner::TrackShoot, x, randomY);
+		  }
+		  else if (nextRandomInt == 3)
+		  {
+			  // spawn last enemy type
+			  return;
+		  }
+		  if (s != NULL)
+		  {
+			  addSprite(s);
+			  lastSpawnTime = time;
+			  currentEnemyCount++;
+		  }
+	  }
+
+
+	  /*
+	  if ((time - lastSpawnTime) >= enemySpawnFrequency/currentLevel && currentEnemyCount <= maxEnemyCount*currentLevel)
 	  {
 		  float x = player->get_x() + al_get_bitmap_width(background) + 20;
 		  float y = player->get_y();
@@ -305,6 +394,7 @@ namespace csis3700 {
 		  lastSpawnTime = time;
 		  currentEnemyCount++;
 	  }
+	  */
   }
 
   void world::removeEnemy(sprite * s)
@@ -316,6 +406,19 @@ namespace csis3700 {
   void world::addMissile(enemy_missile * missile)
   {
 	  missilesToAdd.push_back(missile);
+  }
+
+  bool world::shouldSpawnPickup()
+  {
+	  pickupSpawnAttempts++;
+
+	  if (pickupSpawnAttempts >= pickupSpawnFrequency)
+	  {
+		  pickupSpawnAttempts = 0;
+		  return true;
+	  }
+
+	  return false;
   }
 
   bool world::should_exit() {

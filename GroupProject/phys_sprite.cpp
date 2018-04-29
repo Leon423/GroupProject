@@ -15,6 +15,19 @@ namespace csis3700 {
     sprite::advance_by_time(dt);
     position = position + dt * velocity;
     velocity = velocity + dt * get_acceleration();
+
+	if (position.get_y() < 0)
+	{
+		position = vec2d(position.get_x(), 0);
+	}
+
+	int windowHeight = al_get_display_height(al_get_current_display());
+
+	if (position.get_y() > (windowHeight - get_height()))
+	{
+		position = vec2d(position.get_x(), windowHeight - get_height());
+	}
+
   }
 
   void phys_sprite::set_velocity(const vec2d& v) {

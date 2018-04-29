@@ -4,6 +4,8 @@
 #include "enemy_missile.h"
 #include "image_sequence.h"
 #include "image_library.h"
+#include "pickup.h"
+#include "pickup_firerate.h"
 
 namespace csis3700 {
 	Enemy_Tracker_Shoot::Enemy_Tracker_Shoot(world * w, float initialX, float initialY) : Enemy_Tracker(w, initialX, initialY)
@@ -50,6 +52,18 @@ namespace csis3700 {
 		}
 
 		CheckBounds();
+	}
+
+	void Enemy_Tracker_Shoot::SpawnPickup()
+	{
+		if (theWorld->shouldSpawnPickup())
+		{
+			float spawnX = get_x() + defaultSequence->get_width() / 2;
+			float spawnY = get_y() + defaultSequence->get_height() / 2;
+
+			pickup_firerate* p = new pickup_firerate(spawnX, spawnY);
+			theWorld->addSprite(p);
+		}
 	}
 
 	void Enemy_Tracker_Shoot::Fire()

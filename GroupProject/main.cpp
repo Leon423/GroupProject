@@ -6,6 +6,11 @@
 #include "allegro5/allegro_image.h"
 #include "allegro5/allegro_native_dialog.h"
 #include "allegro5/allegro_primitives.h"
+#include "allegro5\allegro_audio.h"
+#include "allegro5\allegro_acodec.h"
+#include "allegro5\allegro_font.h"
+#include "allegro5\allegro_ttf.h"
+
 
 #include "world.h"
 
@@ -40,6 +45,31 @@ int main(int argc, char **argv){
      cerr << "Failed to install keyboard." << endl;
      exit(1);
    }
+
+   if (!al_install_audio())
+   {
+	   cerr << "Failed to install audio." << endl;
+	   exit(1);
+   }
+
+   if (!al_init_acodec_addon())
+   {
+	   cerr << "Failed to initialize al_init_acodec_addon!" << endl;
+	   exit(1);
+   }
+
+   if (!al_init_font_addon())
+   {
+	   cerr << "FAILED TO INITIALIZE FONT ADDON!" << endl;
+	   exit(1);
+   }
+
+   if (!al_init_ttf_addon())
+   {
+	   cerr << "FAILED TO INITIALIZE TTF ADDON!" << endl;
+	   exit(1);
+   }
+
 
    // This option causes the display to wait for VSYNC before flipping
    // pages. This can help to avoid tearing. Comment this out if you
@@ -77,6 +107,25 @@ int main(int argc, char **argv){
    al_register_event_source(event_queue, al_get_timer_event_source(timer));
    al_register_event_source(event_queue, al_get_mouse_event_source());
    al_register_event_source(event_queue, al_get_keyboard_event_source());
+
+   // font stuff
+
+   // sound stuff
+   // how many sounds playing simultaneously.
+   al_reserve_samples(10);
+
+   ALLEGRO_SAMPLE *song = al_load_sample("background.wav");
+
+   ALLEGRO_SAMPLE_INSTANCE *songInstance = al_create_sample_instance(song);
+
+   al_set_sample_instance_playmode(songInstance, ALLEGRO_PLAYMODE_LOOP);
+   al_attach_sample_instance_to_mixer(songInstance, al_get_default_mixer());
+   al_set_sample_instance_gain(songInstance, .2);
+
+   al_play_sample_instance(songInstance);
+
+
+
    al_start_timer(timer);
 
    csis3700::world world;
@@ -111,6 +160,8 @@ int main(int argc, char **argv){
    al_destroy_timer(timer);
    al_destroy_display(display);
    al_destroy_event_queue(event_queue);
+   al_destroy_sample(song);
+   al_destroy_sample_instance(songInstance);
  
    return 0;
 }
