@@ -26,12 +26,12 @@ namespace csis3700 {
 		image_sequence* s = new image_sequence();
 		image_library* lib = image_library::get();
 
-		s->add_image(lib->get("PY1.jpg"), .2);
-		s->add_image(lib->get("PY2.jpg"), .2);
-		s->add_image(lib->get("PY3.jpg"), .2);
-		s->add_image(lib->get("PY4.jpg"), .2);
-		s->add_image(lib->get("PY5.jpg"), .2);
-		s->add_image(lib->get("PY6.jpg"), .2);
+		s->add_image(lib->get("PY1.png"), .2);
+		s->add_image(lib->get("PY2.png"), .2);
+		s->add_image(lib->get("PY3.png"), .2);
+		s->add_image(lib->get("PY4.png"), .2);
+		s->add_image(lib->get("PY5.png"), .2);
+		s->add_image(lib->get("PY6.png"), .2);
 
 		set_image_sequence(s);
 	}

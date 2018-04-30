@@ -27,13 +27,13 @@ namespace csis3700 {
 		image_sequence* s = new image_sequence();
 		image_library* lib = image_library::get();
 
-		s->add_image(lib->get("GC0.jpg"), .2);
-		s->add_image(lib->get("GC1.jpg"), .2);
-		s->add_image(lib->get("GC2.jpg"), .2);
-		s->add_image(lib->get("GC3.jpg"), .2);
-		s->add_image(lib->get("GC4.jpg"), .2);
-		s->add_image(lib->get("GC5.jpg"), .2);
-		s->add_image(lib->get("GC6.jpg"), .2);
+		s->add_image(lib->get("GC0.png"), .2);
+		s->add_image(lib->get("GC1.png"), .2);
+		s->add_image(lib->get("GC2.png"), .2);
+		s->add_image(lib->get("GC3.png"), .2);
+		s->add_image(lib->get("GC4.png"), .2);
+		s->add_image(lib->get("GC5.png"), .2);
+		s->add_image(lib->get("GC6.png"), .2);
 
 		set_image_sequence(s);
 	}
