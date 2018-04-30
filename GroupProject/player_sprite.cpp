@@ -11,6 +11,8 @@
 #include "obstruction_sprite.h"
 #include "enemy_missile.h"
 #include "pickup.h"
+#include "allegro5\allegro_audio.h"
+#include "allegro5\allegro_acodec.h"
 
 using namespace std;
 
@@ -21,10 +23,10 @@ namespace csis3700 {
 
 	  theWorld = w;
 	  speedX = 200;
-	  speedY = 200;
+	  speedY = 400;
 	  invincible = false;
 	  timeOfBarrelRoll = 0;
-	  barrelRollCooldown = 4.0;
+	  barrelRollCooldown = 6.0;
 	  barrelRollLength = 2.0;
 	  set_position(vec2d(initial_x, initial_y));
 	  maxMissiles = 3;
@@ -34,6 +36,8 @@ namespace csis3700 {
 	  minimumFireRate = .5;
 	  lastShotTime = 0;
 	  collisionChan = Player;
+	  dieSound = al_load_sample("explosion.wav");
+	  fireSound = al_load_sample("fire.wav");
 	  create_image_sequence();
 
   }
@@ -57,8 +61,8 @@ namespace csis3700 {
 	  barrelRollSequence = new image_sequence();
 	  barrelRollSequence->add_image(lib->get("hero1.png"), 0);
 	  barrelRollSequence->add_image(lib->get("hero2.png"), 0.1);
-	  barrelRollSequence->add_image(lib->get("hero1.png"), 0.2);
-	  barrelRollSequence->add_image(lib->get("hero2.png"), 0.1);
+	  barrelRollSequence->add_image(lib->get("hero1_flip.png"), 0.2);
+	  barrelRollSequence->add_image(lib->get("hero1.png"), 0.1);
   }
 
   void player_sprite::advance_by_time(double dt) {
@@ -111,6 +115,8 @@ namespace csis3700 {
 			  s->collidedWithPlayer();
 		  }
 
+		  al_play_sample(dieSound, 0.2, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+
 		  theWorld->player_killed();
 		  return;
 	  }
@@ -158,7 +164,12 @@ namespace csis3700 {
   void player_sprite::Fire()
   {
 	  float spawnX = get_x() + get_width();
-	  float spawnY = get_y() + get_height() / 4;
+	  float spawnY = get_y() + get_height() / 2;
+
+	  spawnY -= 10;
+
+	  al_play_sample(fireSound, 0.2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
+
 	  player_missile *myShot = new player_missile(this, spawnX, spawnY);
 	  currentMissileCount++;
 
@@ -183,6 +194,7 @@ namespace csis3700 {
 	  if (shotCooldown <= minimumFireRate)
 	  {
 		  shotCooldown = minimumFireRate;
+		  score += 5;
 	  }
   }
 }

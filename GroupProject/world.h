@@ -7,13 +7,20 @@
 #include <vector>
 #include "Enemy_Spawner.h"
 #include "enemy_missile.h"
+#include "Enemy_Sprite.h"
+#include <random>
+#include <ctime>
+#include "allegro5\allegro_font.h"
+#include "allegro5\allegro_ttf.h"
+#include "allegro5\allegro_audio.h"
+#include "allegro5\allegro_acodec.h"
 
 namespace csis3700 {
 
 	class player_sprite;
 	class Enemy_Spawner;
 	class enemy_missile;
-
+	class Enemy_Sprite;
   class world {
   public:
     /**
@@ -77,6 +84,13 @@ namespace csis3700 {
 
 	void addMissile(enemy_missile* missile);
 
+	bool shouldSpawnPickup();
+
+	int get_currentLevel()
+	{
+		return currentLevel;
+	}
+
   private:
     void resolve_collisions();
     player_sprite *player;
@@ -94,6 +108,8 @@ namespace csis3700 {
 
 	void SpawnEnemies();
 
+	void UpdateLevel();
+
 	double lastSpawnTime;
 	/*Time since creation*/
 	double time;
@@ -107,8 +123,19 @@ namespace csis3700 {
 
 	int currentEnemyCount;
 	int maxEnemyCount;
+	double enemySpawnFrequency;
 
-	
+	int pickupSpawnFrequency;
+	int pickupSpawnAttempts;
+
+	int currentLevel;
+	double LevelChangeScore;
+
+	std::minstd_rand generator;
+
+	ALLEGRO_FONT *font;
+	ALLEGRO_SAMPLE *backgroundMusic;
+	ALLEGRO_SAMPLE_INSTANCE *backgroundInstance;
   };
 }
 

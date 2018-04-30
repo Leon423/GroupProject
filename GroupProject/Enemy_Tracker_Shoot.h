@@ -19,6 +19,8 @@ namespace csis3700 {
 		// Inherited via Enemy_Sprite
 		virtual void resolve(const collision & collision, sprite * other);
 		virtual void advance_by_time(double dt);
+	protected:
+		virtual void SpawnPickup();
 	private:
 		float fireRate;
 		float lastFireTime;

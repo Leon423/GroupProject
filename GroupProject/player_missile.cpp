@@ -16,10 +16,10 @@ namespace csis3700
 
 	csis3700::player_missile::player_missile(player_sprite * p, float initial_x, float initial_y) : phys_sprite(initial_x, initial_y)
 	{
-		lifeSpan = 7;
+		lifeSpan = 4;
 		owner = p;
 		//set_position(vec2d(initial_x, initial_y));
-		speed = 300;
+		speed = 1000;
 		set_velocity(vec2d(speed, 0));
 		creationTime = time;
 		pointsScored = 0;
@@ -75,7 +75,7 @@ namespace csis3700
 		
 		image_library *lib = image_library::get();
 		defaultSequence->add_image(lib->get("LB1.png"), 0.15);
-		defaultSequence->add_image(lib->get("LB2.png"), 0.05);
+		//defaultSequence->add_image(lib->get("LB2.png"), 0.05);
 		set_image_sequence(defaultSequence);
 	}
 

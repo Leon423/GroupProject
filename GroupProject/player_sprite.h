@@ -4,6 +4,8 @@
 #include "world.h"
 #include "image_sequence.h"
 #include "player_missile.h"
+#include "allegro5\allegro_audio.h"
+#include "allegro5\allegro_acodec.h"
 
 namespace csis3700 {
 
@@ -42,6 +44,11 @@ namespace csis3700 {
 
 	void IncreaseFireRate(double increase);
 
+	void AddScore(double add)
+	{
+		score += add;
+	}
+
   private:
 	  // pointer to the world
 	  world *theWorld;
@@ -72,6 +79,9 @@ namespace csis3700 {
 
 	  double speedX;
 	  double speedY;
+	  ALLEGRO_SAMPLE* fireSound;
+	  ALLEGRO_SAMPLE* dieSound;
+
   };
 }
 
