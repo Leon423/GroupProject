@@ -335,10 +335,16 @@ namespace csis3700 {
 	  char * p = new char[str.length() + 1];
 	  memcpy(p, str.c_str(), str.length() + 1);
 
-
-	  al_draw_text(font, al_map_rgb(255, 255, 255), player->get_x() - 40, 0, ALLEGRO_ALIGN_LEFT, "SCORE:");
-	  al_draw_textf(font, al_map_rgb(255, 255, 255), player->get_x() + 100, 0, ALLEGRO_ALIGN_LEFT, p);
-
+	  if (!playerKilled)
+	  {
+		  al_draw_text(font, al_map_rgb(255, 255, 255), player->get_x() - 40, 0, ALLEGRO_ALIGN_LEFT, "SCORE:");
+		  al_draw_textf(font, al_map_rgb(255, 255, 255), player->get_x() + 100, 0, ALLEGRO_ALIGN_LEFT, p);
+	  }
+	  else
+	  {
+		  al_draw_text(font, al_map_rgb(255, 255, 255), player->get_x() - 200 + al_get_display_width(al_get_current_display())/2, al_get_display_height(al_get_current_display())/2, ALLEGRO_ALIGN_LEFT, "FINAL SCORE:");
+		  al_draw_textf(font, al_map_rgb(255, 255, 255), player->get_x() + 50 + al_get_display_width(al_get_current_display()) / 2, al_get_display_height(al_get_current_display()) / 2, ALLEGRO_ALIGN_LEFT, p);
+	  }
   }
 
   void world::SpawnEnemies()
