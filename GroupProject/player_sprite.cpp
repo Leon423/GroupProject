@@ -23,10 +23,10 @@ namespace csis3700 {
 
 	  theWorld = w;
 	  speedX = 200;
-	  speedY = 200;
+	  speedY = 400;
 	  invincible = false;
 	  timeOfBarrelRoll = 0;
-	  barrelRollCooldown = 4.0;
+	  barrelRollCooldown = 6.0;
 	  barrelRollLength = 2.0;
 	  set_position(vec2d(initial_x, initial_y));
 	  maxMissiles = 3;
@@ -194,6 +194,7 @@ namespace csis3700 {
 	  if (shotCooldown <= minimumFireRate)
 	  {
 		  shotCooldown = minimumFireRate;
+		  score += 5;
 	  }
   }
 }

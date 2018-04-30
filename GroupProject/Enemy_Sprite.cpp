@@ -6,6 +6,7 @@
 #include "pickup_firerate.h"
 #include "allegro5\allegro_audio.h"
 #include "allegro5\allegro_acodec.h"
+#include "Pickup_Coin.h"
 
 
 namespace csis3700 {
@@ -49,6 +50,13 @@ namespace csis3700 {
 	}
 	void Enemy_Sprite::SpawnPickup()
 	{
-		// do nothing if we have no pickup to spawn.
+		if (theWorld->shouldSpawnPickup())
+		{
+			float spawnX = get_x() + defaultSequence->get_width() / 2;
+			float spawnY = get_y() + defaultSequence->get_height() / 2;
+
+			Pickup_Coin* p = new Pickup_Coin(spawnX, spawnY);
+			theWorld->addSprite(p);
+		}
 	}
 }

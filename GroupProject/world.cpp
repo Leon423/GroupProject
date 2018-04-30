@@ -49,6 +49,16 @@ namespace csis3700 {
 	  generator = minstd_rand(std::time(0));
 
 	  font = al_load_font("Anonymous_Pro.ttf", 36, NULL);
+	  backgroundMusic = al_load_sample("background.wav");
+
+	  backgroundInstance = al_create_sample_instance(backgroundMusic);
+
+	  al_set_sample_instance_playmode(backgroundInstance, ALLEGRO_PLAYMODE_LOOP);
+	  al_attach_sample_instance_to_mixer(backgroundInstance, al_get_default_mixer());
+	  al_set_sample_instance_gain(backgroundInstance, .2);
+
+	  al_play_sample_instance(backgroundInstance);
+	  
 
 	  create_sprites();
   }
@@ -278,7 +288,7 @@ namespace csis3700 {
 	
 	if (player->getScore() >= (LevelChangeScore*currentLevel))
 	{
-		currentLevel++;
+		UpdateLevel();
 	}
 
 	updateSprites();
@@ -301,9 +311,10 @@ namespace csis3700 {
 	  int backgroundPlayerIsIn = x / bgWidth;
 	  // TODO: Update this to actually alternate the background. Probably gonna use sprites instead of just calling it here.
 	  // ALSO NEED TO CHECK CURRENT LEVEL TO DRAW CORRECT BACKGROUND.
-	  al_draw_bitmap(background, -bgWidth + bgWidth*backgroundPlayerIsIn, 0, 0);
-	  al_draw_bitmap(background, 0 + bgWidth*backgroundPlayerIsIn, 0, 0);
-	  al_draw_bitmap(background, bgWidth + bgWidth*backgroundPlayerIsIn, 0, 0);
+
+	 al_draw_bitmap(background, -bgWidth + bgWidth * backgroundPlayerIsIn, 0, 0);
+	 al_draw_bitmap(background, 0 + bgWidth * backgroundPlayerIsIn, 0, 0);
+	 al_draw_bitmap(background, bgWidth + bgWidth * backgroundPlayerIsIn, 0, 0);
 
 	  for (vector<sprite*>::iterator it = sprites.begin(); it != sprites.end(); ++it)
 	  {
@@ -342,7 +353,7 @@ namespace csis3700 {
 	  
 	  if ((time - lastSpawnTime) >= spawnFreq && currentEnemyCount <= maxEnemyCount * currentLevel)
 	  {
-		  float x = player->get_x() + al_get_bitmap_width(background) + 20;
+		  float x = player->get_x() + al_get_display_width(al_get_current_display()) + 20;
 		  Enemy_Spawner* eSpawner = Enemy_Spawner::get();
 		  sprite* s = NULL;
 		  if (nextRandomInt == 0)
@@ -395,6 +406,31 @@ namespace csis3700 {
 		  currentEnemyCount++;
 	  }
 	  */
+  }
+
+  void world::UpdateLevel()
+  {
+	  if (currentLevel == 1)
+	  {
+		  image_library* lib = image_library::get();
+		  background = lib->get("Galaxy.png");
+
+		  al_stop_sample_instance(backgroundInstance);
+		  al_destroy_sample(backgroundMusic);
+		  al_destroy_sample_instance(backgroundInstance);
+		  backgroundMusic = al_load_sample("background2.wav");
+		  backgroundInstance = al_create_sample_instance(backgroundMusic);
+		  al_set_sample_instance_playmode(backgroundInstance, ALLEGRO_PLAYMODE_LOOP);
+		  al_attach_sample_instance_to_mixer(backgroundInstance, al_get_default_mixer());
+		  al_set_sample_instance_gain(backgroundInstance, .2);
+
+		  al_play_sample_instance(backgroundInstance);
+
+		  
+	  }
+	  
+	  currentLevel++;
+
   }
 
   void world::removeEnemy(sprite * s)

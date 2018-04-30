@@ -114,6 +114,7 @@ int main(int argc, char **argv){
    // how many sounds playing simultaneously.
    al_reserve_samples(10);
 
+   /*
    ALLEGRO_SAMPLE *song = al_load_sample("background.wav");
 
    ALLEGRO_SAMPLE_INSTANCE *songInstance = al_create_sample_instance(song);
@@ -124,7 +125,7 @@ int main(int argc, char **argv){
 
    al_play_sample_instance(songInstance);
 
-
+   */
 
    al_start_timer(timer);
 
@@ -160,8 +161,8 @@ int main(int argc, char **argv){
    al_destroy_timer(timer);
    al_destroy_display(display);
    al_destroy_event_queue(event_queue);
-   al_destroy_sample(song);
-   al_destroy_sample_instance(songInstance);
+   //al_destroy_sample(song);
+   //al_destroy_sample_instance(songInstance);
  
    return 0;
 }

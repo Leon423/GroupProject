@@ -44,6 +44,11 @@ namespace csis3700 {
 
 	void IncreaseFireRate(double increase);
 
+	void AddScore(double add)
+	{
+		score += add;
+	}
+
   private:
 	  // pointer to the world
 	  world *theWorld;

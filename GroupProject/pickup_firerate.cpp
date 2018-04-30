@@ -8,7 +8,7 @@
 namespace csis3700 {
 	pickup_firerate::pickup_firerate(float initX, float initY) : pickup(initX, initY)
 	{
-		firerateIncrease = 1;
+		firerateIncrease = .5;
 		create_image_sequence();
 	}
 

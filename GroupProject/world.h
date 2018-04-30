@@ -12,6 +12,8 @@
 #include <ctime>
 #include "allegro5\allegro_font.h"
 #include "allegro5\allegro_ttf.h"
+#include "allegro5\allegro_audio.h"
+#include "allegro5\allegro_acodec.h"
 
 namespace csis3700 {
 
@@ -106,6 +108,8 @@ namespace csis3700 {
 
 	void SpawnEnemies();
 
+	void UpdateLevel();
+
 	double lastSpawnTime;
 	/*Time since creation*/
 	double time;
@@ -130,7 +134,8 @@ namespace csis3700 {
 	std::minstd_rand generator;
 
 	ALLEGRO_FONT *font;
-
+	ALLEGRO_SAMPLE *backgroundMusic;
+	ALLEGRO_SAMPLE_INSTANCE *backgroundInstance;
   };
 }
 
