@@ -38,6 +38,7 @@ namespace csis3700 {
 	  collisionChan = Player;
 	  dieSound = al_load_sample("explosion.wav");
 	  fireSound = al_load_sample("fire.wav");
+	  barrelRollSound = al_load_sample("peproll1.wav");
 	  create_image_sequence();
 
   }
@@ -135,6 +136,7 @@ namespace csis3700 {
 
   void player_sprite::DoABarrelRoll(double dt)
   {
+	  al_play_sample(barrelRollSound, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, 0);
 	  timeOfBarrelRoll = time;
 	  invincible = true;
 	  set_image_sequence(barrelRollSequence);

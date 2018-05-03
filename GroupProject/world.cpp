@@ -44,16 +44,20 @@ namespace csis3700 {
 
 	  enemySpawnFrequency = 5;
 	  currentLevel = 1;
-	  LevelChangeScore = 1;
+	  LevelChangeScore = 10;
 
 	  generator = minstd_rand(std::time(0));
 
 	  font = al_load_font("Anonymous_Pro.ttf", 36, NULL);
+	  
 	  backgroundMusic = al_load_sample("background.wav");
 
 	  backgroundInstance = al_create_sample_instance(backgroundMusic);
+	  //added this to fix it
+	  //al_restore_default_mixer();
 
 	  al_set_sample_instance_playmode(backgroundInstance, ALLEGRO_PLAYMODE_LOOP);
+	  //al_attach_sample_instance_to_mixer(backgroundInstance, al_get_default_mixer());
 	  al_attach_sample_instance_to_mixer(backgroundInstance, al_get_default_mixer());
 	  al_set_sample_instance_gain(backgroundInstance, .2);
 

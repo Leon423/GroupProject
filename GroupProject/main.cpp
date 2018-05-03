@@ -58,6 +58,8 @@ int main(int argc, char **argv){
 	   exit(1);
    }
 
+   
+
    if (!al_init_font_addon())
    {
 	   cerr << "FAILED TO INITIALIZE FONT ADDON!" << endl;
@@ -112,7 +114,9 @@ int main(int argc, char **argv){
 
    // sound stuff
    // how many sounds playing simultaneously.
-   al_reserve_samples(10);
+   //al_reserve_samples(100);
+   al_restore_default_mixer();
+   al_reserve_samples(20);
 
    /*
    ALLEGRO_SAMPLE *song = al_load_sample("background.wav");

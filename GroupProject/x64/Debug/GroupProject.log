@@ -1,0 +1,57 @@
+﻿  stdafx.cpp
+  world.cpp
+d:\groupproject\groupproject\world.cpp(103): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\groupproject\groupproject\world.cpp(123): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  vec2d.cpp
+d:\groupproject\groupproject\vec2d.cpp(10): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  sprite.cpp
+  rectangle.cpp
+  player_sprite.cpp
+  player_missile.cpp
+  pickup_firerate.cpp
+  Pickup_Coin.cpp
+  pickup.cpp
+  phys_sprite.cpp
+  obstruction_sprite.cpp
+  main.cpp
+  keyboard_manager.cpp
+  image_sequence.cpp
+  image_library.cpp
+  GroupProject.cpp
+  Enemy_Tracker_Shoot.cpp
+  Enemy_Tracker.cpp
+  Enemy_Sprite.cpp
+  Enemy_Spawner.cpp
+  Generating Code...
+d:\groupproject\groupproject\enemy_spawner.cpp(48): warning C4715: 'csis3700::Enemy_Spawner::SpawnEnemy': not all control paths return a value
+d:\groupproject\groupproject\world.cpp(237): warning C4172: returning address of local variable or temporary: w
+  Compiling...
+  enemy_missile.cpp
+  Enemy_Flyer.cpp
+  collision.cpp
+  Generating Code...
+Enemy_Sprite.obj : error LNK2019: unresolved external symbol __imp_al_play_sample referenced in function "public: virtual void __cdecl csis3700::Enemy_Sprite::die(void)" (?die@Enemy_Sprite@csis3700@@UEAAXXZ)
+player_sprite.obj : error LNK2001: unresolved external symbol __imp_al_play_sample
+Enemy_Sprite.obj : error LNK2019: unresolved external symbol __imp_al_load_sample referenced in function "public: __cdecl csis3700::Enemy_Sprite::Enemy_Sprite(class csis3700::world *,float,float)" (??0Enemy_Sprite@csis3700@@QEAA@PEAVworld@1@MM@Z)
+player_sprite.obj : error LNK2001: unresolved external symbol __imp_al_load_sample
+world.obj : error LNK2001: unresolved external symbol __imp_al_load_sample
+main.obj : error LNK2019: unresolved external symbol __imp_al_init_image_addon referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_al_show_native_message_box referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_al_install_audio referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_al_reserve_samples referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_al_init_acodec_addon referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_al_init_font_addon referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_al_init_ttf_addon referenced in function main
+world.obj : error LNK2019: unresolved external symbol __imp_al_destroy_sample referenced in function "private: void __cdecl csis3700::world::UpdateLevel(void)" (?UpdateLevel@world@csis3700@@AEAAXXZ)
+world.obj : error LNK2019: unresolved external symbol __imp_al_create_sample_instance referenced in function "public: __cdecl csis3700::world::world(void)" (??0world@csis3700@@QEAA@XZ)
+world.obj : error LNK2019: unresolved external symbol __imp_al_destroy_sample_instance referenced in function "private: void __cdecl csis3700::world::UpdateLevel(void)" (?UpdateLevel@world@csis3700@@AEAAXXZ)
+world.obj : error LNK2019: unresolved external symbol __imp_al_set_sample_instance_gain referenced in function "public: __cdecl csis3700::world::world(void)" (??0world@csis3700@@QEAA@XZ)
+world.obj : error LNK2019: unresolved external symbol __imp_al_set_sample_instance_playmode referenced in function "public: __cdecl csis3700::world::world(void)" (??0world@csis3700@@QEAA@XZ)
+world.obj : error LNK2019: unresolved external symbol __imp_al_play_sample_instance referenced in function "public: __cdecl csis3700::world::world(void)" (??0world@csis3700@@QEAA@XZ)
+world.obj : error LNK2019: unresolved external symbol __imp_al_stop_sample_instance referenced in function "private: void __cdecl csis3700::world::UpdateLevel(void)" (?UpdateLevel@world@csis3700@@AEAAXXZ)
+world.obj : error LNK2019: unresolved external symbol __imp_al_attach_sample_instance_to_mixer referenced in function "public: __cdecl csis3700::world::world(void)" (??0world@csis3700@@QEAA@XZ)
+world.obj : error LNK2019: unresolved external symbol __imp_al_get_default_mixer referenced in function "public: __cdecl csis3700::world::world(void)" (??0world@csis3700@@QEAA@XZ)
+world.obj : error LNK2019: unresolved external symbol __imp_al_load_font referenced in function "public: __cdecl csis3700::world::world(void)" (??0world@csis3700@@QEAA@XZ)
+world.obj : error LNK2019: unresolved external symbol __imp_al_draw_text referenced in function "public: void __cdecl csis3700::world::draw(void)" (?draw@world@csis3700@@QEAAXXZ)
+world.obj : error LNK2019: unresolved external symbol __imp_al_draw_textf referenced in function "public: void __cdecl csis3700::world::draw(void)" (?draw@world@csis3700@@QEAAXXZ)
+D:\GroupProject\x64\Debug\GroupProject.exe : fatal error LNK1120: 21 unresolved externals

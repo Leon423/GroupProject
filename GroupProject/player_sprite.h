@@ -81,6 +81,7 @@ namespace csis3700 {
 	  double speedY;
 	  ALLEGRO_SAMPLE* fireSound;
 	  ALLEGRO_SAMPLE* dieSound;
+	  ALLEGRO_SAMPLE* barrelRollSound;
 
   };
 }
