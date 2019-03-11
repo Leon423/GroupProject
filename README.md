@@ -1,4 +1,4 @@
 # GroupProject
 Final Group Project for CSIS3700
 
-Just following the github tutorial to refresh my memory.
+A simple 2D Side Scroller Space Shooter game with dynamic enemy spawns, powerups, multiple levels, etc. Built using the Allegro game framework.
